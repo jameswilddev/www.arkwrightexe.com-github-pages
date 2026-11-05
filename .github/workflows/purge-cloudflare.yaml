@@ -1,0 +1,12 @@
+on: page_build
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: jakejarvis/cloudflare-purge-action@master
+      env:
+        CLOUDFLARE_TOKEN: ${{ secrets.PRODUCTION_CLOUDFLARE_TOKEN }}
+        CLOUDFLARE_ZONE: ${{ secrets.PRODUCTION_CLOUDFLARE_ZONE }}
